@@ -24,6 +24,8 @@ public class TestDate1Date2Comparator {
 		// -----------------------------------
 		// | 3 | 07/01/2000		| 01/02/1999 |
 		// -----------------------------------
+		// | 7 | 07/01/2000		| 01/02/1950 |
+		// -----------------------------------
 		// | 1 | 01/01/2000		| 01/02/1999 |
 		// -----------------------------------
 		// | 6 | 				| 22/02/1999 |
@@ -33,7 +35,7 @@ public class TestDate1Date2Comparator {
 		// | 2 | 				| 01/02/1999	 |
 		// -----------------------------------
 		
-		// expected ids 5,3,1,6,4,2
+		// expected ids 5,3,8,1,6,4,2
 		
 		List<Domain> samples = new ArrayList<Domain>();
 		Domain testCase1 = new Domain();
@@ -66,17 +68,24 @@ public class TestDate1Date2Comparator {
 		testCase6.setFirstDate(null);
 		testCase6.setSecondDate(DateUtils.getDate("22/02/1999"));
 
-		samples.add(testCase6);
+		Domain testCase7 = new Domain();
+		testCase7.setId(7);
+		testCase7.setFirstDate(DateUtils.getDate("07/01/2000"));
+		testCase7.setSecondDate(DateUtils.getDate("01/02/1950"));
+		
 		samples.add(testCase1);
+		samples.add(testCase2);
 		samples.add(testCase3);
 		samples.add(testCase4);
-		samples.add(testCase2);
 		samples.add(testCase5);
+		samples.add(testCase6);
+		samples.add(testCase7);
+		
 		printSamples("Before sorting", samples);
 		Collections.sort(samples, new Date1Date2Comparator());
 		printSamples("After sorting", samples);
 
-		int[] expectedIds = { 5, 3, 1, 6, 4, 2 };
+		int[] expectedIds = { 5, 3, 7, 1, 6, 4, 2 };
 		for (int i = 0; i < samples.size(); i++) {
 			Domain testCase = samples.get(i);
 			System.out.println("testCase id: " + testCase.getId() + " expected id: " + expectedIds[i]);
